@@ -5,7 +5,7 @@ export async function getDBConnection() {
   try {
     const db = await open({
       filename: "db.sqlite",
-      driver: driver.Database,
+      driver: driver.Database
     });
 
     if (!db) {
