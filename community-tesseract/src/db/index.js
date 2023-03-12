@@ -13,10 +13,10 @@ export async function getDBConnection() {
     }
 
     return db;
-  } catch (error) {
-    console.error(
-      `There was an error trying to connect to the DBMS: ${error.message}`,
-      error
+  } catch (e) {
+    console.e(
+      `There was an error trying to connect to the DBMS: ${e.message}`,
+      e
     );
   }
 }
@@ -25,6 +25,7 @@ export async function initDB() {
   try {
     const db = await getDBConnection();
 
+    //exec se usa para hacer sentencias en sql
     await db.exec(`
       CREATE TABLE IF NOT EXISTS todos (
         id INTEGER PRIMARY KEY,
@@ -35,10 +36,10 @@ export async function initDB() {
     `);
 
     await db.close();
-  } catch (error) {
-    console.error(
-      `There was an error trying to init the DB: ${error.message}`,
-      error
+  } catch (e) {
+    console.e(
+      `There was an error trying to init the DB: ${e.message}`,
+      e
     );
   }
 }
