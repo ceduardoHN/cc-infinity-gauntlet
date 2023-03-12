@@ -83,21 +83,20 @@ TodosRouter.delete("/to-do/:id", async function (request, response) {
 
 TodosRouter.patch("/to-do/:id", async function (request, response) {
   try {
-    const { id }=request.params;
+    const {id}=request.params;
     const db=await getDBConnection();
-
     const todoExists=await db.get(
       `SELECT * FROM todos WHERE id=?`,
       id
     );
 
     if (!todoExists) {
-      return response
-        .status(404)
-        .send({ message: "To Do Not Found" });
+      return response.status(404).send({
+        message: "To Do Not Found" 
+      });
     }
 
-    const { title, description, isDone: is_done }=request.body;
+    const {title, description, isDone: is_done}=request.body;
 
     await db.run(
       `UPDATE todos 
@@ -111,11 +110,11 @@ TodosRouter.patch("/to-do/:id", async function (request, response) {
 
     await db.close();
 
-    response.send({ message: "To do updated" });
+    response.send({message: "To do updated"});
   } catch (error) {
     response.status(500).send({
       message: "Something went wrong trying to update a todo",
-      error,
+      error
     });
   }
 });
