@@ -20,10 +20,7 @@ TodosRouter.get("/to-dos", async function (request, response) {
   }
 });
 
-TodosRouter.post(
-  "/to-do",
-  validator,
-  async function (request,response) {
+TodosRouter.post("/to-do",validator,async function (request,response) {
     try {
       const {title,description}=request.body;
       const db=await getDBConnection();
@@ -47,8 +44,7 @@ TodosRouter.post(
         error,
       });
     }
-  }
-);
+});
 
 TodosRouter.delete("/to-do/:id", async function (request, response) {
   try {
