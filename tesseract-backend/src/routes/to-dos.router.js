@@ -7,9 +7,10 @@ TodosRouter.get("/to-dos", async function (request, response) {
   try {
     const db=await getDBConnection();
 
-    const todos=await db.all("SELECT * FROM todos");
+    const todos=await db.all("SELECT title AS text, * FROM todos");
 
     await db.close();
+    //const text=todos.title;
 
     response.send({todos});
   } catch (error) {
@@ -22,7 +23,8 @@ TodosRouter.get("/to-dos", async function (request, response) {
 
 TodosRouter.post("/to-do",validator,async function (request,response) {
     try {
-      const {title,description}=request.body;
+      const {text,description}=request.body;
+      const title=text;
       const db=await getDBConnection();
 
       await db.run(`
@@ -77,7 +79,7 @@ TodosRouter.delete("/to-do/:id", async function (request, response) {
   }
 });
 
-TodosRouter.patch("/to-do/:id", async function (request, response) {
+TodosRouter.put("/to-do/:id", async function (request, response) {
   try {
     const {id}=request.params;
     const db=await getDBConnection();
@@ -92,7 +94,7 @@ TodosRouter.patch("/to-do/:id", async function (request, response) {
       });
     }
 
-    const {title, description, isDone: is_done}=request.body;
+    const {text:title, description, isDone: is_done}=request.body;
 
     await db.run(
       `UPDATE todos 
